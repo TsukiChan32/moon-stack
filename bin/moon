@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+require 'moon_stack'
+
+command = ARGV.shift
+
+case command
+when 'new'
+  name = ARGV.shift
+
+  abort 'Usage: moon new APP_NAME' unless name
+
+  MoonStack::Generator.new(name).run
+when '--version', '-v'
+  puts "Moon Stack #{MoonStack::VERSION}"
+when '--help', '-h', nil
+  puts <<~HELP
+    Moon Stack 🌙
+
+    Usage:
+      moon new APP_NAME
+      moon --version
+      moon --help
+  HELP
+else
+  abort "Unknown command: #{command}"
+end
