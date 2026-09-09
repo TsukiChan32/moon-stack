@@ -26,17 +26,22 @@ Happy hacking under the moon 🌙
 
 ```bash
 gem install moon-stack
-
+```
 
 ## Create an app
 
+```bash
 moon new myapp
 cd myapp
 bundle install
 bundle exec puma
+```
 
 Then open:
+
+```text
 http://localhost:6767
+```
 
 ## Philosophy
 
@@ -47,3 +52,4 @@ There is no Moon runtime.
 Once your app has been generated, Moon Stack is no longer required.
 
 Replace anything you want.
+
