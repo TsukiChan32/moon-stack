@@ -17,7 +17,7 @@ Happy hacking under the moon 🌙
 - Rack
 - Puma
 - Sequel
-- SQLite
+- SQLite (you can also use postgresql and mysql)
 - ERB
 - htmx
 - Tailwind CSS
@@ -31,7 +31,7 @@ gem install moon-stack
 ## Create an app
 
 ```bash
-moon new myapp
+moon new myapp --database=*your database*
 cd myapp
 bundle install
 bundle exec puma
@@ -52,4 +52,3 @@ There is no Moon runtime.
 Once your app has been generated, Moon Stack is no longer required.
 
 Replace anything you want.
-

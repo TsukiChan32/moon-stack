@@ -2,15 +2,34 @@
 
 require 'moon_stack'
 
+VALID_DATABASES = %w[sqlite postgresql mysql].freeze
+DEFAULT_DATABASE = 'sqlite'.freeze
+
+def parse_database_option(args)
+  flag = args.find { |arg| arg.start_with?('--database=') }
+  return DEFAULT_DATABASE unless flag
+
+  db = flag.split('=', 2).last.to_s.downcase
+  unless VALID_DATABASES.include?(db)
+    abort <<~MSG
+      Unknown database: #{db}
+      Supported: #{VALID_DATABASES.join(', ')}
+    MSG
+  end
+  db
+end
+
 command = ARGV.shift
 
 case command
 when 'new'
   name = ARGV.shift
 
-  abort 'Usage: moon new APP_NAME' unless name
+  abort 'Usage: moon new APP_NAME [--database=sqlite|postgresql|mysql]' unless name
 
-  MoonStack::Generator.new(name).run
+  database = parse_database_option(ARGV)
+
+  MoonStack::Generator.new(name, database: database).run
 when '--version', '-v'
   puts "Moon Stack #{MoonStack::VERSION}"
 when '--help', '-h', nil
@@ -18,9 +37,19 @@ when '--help', '-h', nil
     Moon Stack 🌙
 
     Usage:
-      moon new APP_NAME
+      moon new APP_NAME [--database=DATABASE]
       moon --version
       moon --help
+
+    Databases:
+      sqlite        (default)
+      postgresql
+      mysql
+
+    Examples:
+      moon new blog
+      moon new blog --database=postgresql
+      moon new shop --database=mysql
   HELP
 else
   abort "Unknown command: #{command}"
