@@ -31,7 +31,14 @@ gem install moon-stack
 ## Create an app
 
 ```bash
-moon new myapp --database=*your database*
+# domyślnie SQLite
+moon new myapp
+
+# PostgreSQL
+moon new myapp --database=postgresql
+
+# MySQL
+moon new myapp --database=mysql
 cd myapp
 bundle install
 bundle exec puma
